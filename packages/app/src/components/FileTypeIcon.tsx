@@ -21,11 +21,11 @@ import type { WorkspaceFile } from "@stave/editor";
 type Language = WorkspaceFile["language"];
 
 const LOGOS: Partial<Record<Language, string>> = {
-  strudel: "/file-icons/strudel.png",
-  p5js: "/file-icons/p5.svg",
-  hydra: "/file-icons/hydra.svg",
-  glsl: "/file-icons/glsl.svg",
-  sonicpi: "/file-icons/sonicpi.svg",
+  strudel: (process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/file-icons/strudel.png",
+  p5js: (process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/file-icons/p5.svg",
+  hydra: (process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/file-icons/hydra.svg",
+  glsl: (process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/file-icons/glsl.svg",
+  sonicpi: (process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/file-icons/sonicpi.svg",
 };
 
 const boxOf = (size: number): React.CSSProperties => ({ width: size, height: size, flex: "none", display: "block" });

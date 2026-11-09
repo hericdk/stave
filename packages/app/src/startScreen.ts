@@ -70,7 +70,7 @@ export const INTRO_VIDEO = {
   id: "LoVfu-FCTAg",
   title: "Introducing Stave",
   /** its opening frame, shipped with the app so nothing is fetched from YouTube until Play is pressed */
-  poster: "/start/introducing-stave.jpg",
+  poster: (process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/start/introducing-stave.jpg",
 } as const;
 
 export const introWatchUrl = `https://www.youtube.com/watch?v=${INTRO_VIDEO.id}`;

@@ -352,3 +352,21 @@ html[data-keyboard] [data-phone-top-bar][data-phone-top-held="sideways"] {
     user-select: text;
   }
 }
+
+/* Oceano: fundo transparente — o mar da página inicial do navegador Oceano aparece por
+   trás do editor. Ativado pelo botão "transparente" ao lado do Play (só no build do Oceano). */
+html[data-oceano-fundo="transparente"] {
+  --bg-app: transparent;
+  --bg-chrome: color-mix(in srgb, #0d0d1a 70%, transparent);
+  --bg-chrome-2: color-mix(in srgb, #111126 70%, transparent);
+  --bg-sidebar: color-mix(in srgb, #1a1a2e 72%, transparent);
+  --bg-panel: color-mix(in srgb, #14142a 72%, transparent);
+  background: transparent !important;
+}
+html[data-oceano-fundo="transparente"] body,
+html[data-oceano-fundo="transparente"] main { background: transparent !important; }
+html[data-oceano-fundo="transparente"] .monaco-editor,
+html[data-oceano-fundo="transparente"] .monaco-editor-background,
+html[data-oceano-fundo="transparente"] .monaco-editor .margin,
+html[data-oceano-fundo="transparente"] .monaco-editor .inputarea.ime-input { background: transparent !important; }
+html[data-oceano-fundo="transparente"] .monaco-editor .view-line span { text-shadow: 1px 1px 0 rgba(0, 0, 0, .85); }

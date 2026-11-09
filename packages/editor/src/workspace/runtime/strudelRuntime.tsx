@@ -101,7 +101,43 @@ function LiveModeToggle({
       }
       style={autoRefresh ? activeStyle : inactiveStyle}
     >
-      {autoRefresh ? '\u27F3 live' : '\u27F3'}
+      {process.env.NEXT_PUBLIC_OCEANO === '1'
+        // Oceano: caixa "ao vivo" ao lado do Play
+        ? <><span aria-hidden="true" style={{ width: 10, height: 10, border: '1px solid currentColor', display: 'inline-grid', placeItems: 'center', fontSize: 9, lineHeight: 1 }}>{autoRefresh ? '\u2713' : ''}</span>ao vivo</>
+        : autoRefresh ? '\u27F3 live' : '\u27F3'}
+    </button>
+  )
+}
+
+// Oceano: fundo próprio (com os backdrops do Stave) ou transparente, mostrando o mar
+// da página inicial do navegador Oceano. A escolha fica guardada e o Oceano é avisado.
+function lerFundoOceano(): string {
+  try { return localStorage.getItem('oceano:fundo') === 'transparente' ? 'transparente' : 'efeitos' } catch { return 'efeitos' }
+}
+function aplicarFundoOceano(f: string): void {
+  if (typeof document === 'undefined') return
+  document.documentElement.dataset.oceanoFundo = f
+  try { localStorage.setItem('oceano:fundo', f) } catch {}
+  try { window.parent?.postMessage({ strudel: 'fundo', valor: f }, '*') } catch {}
+}
+function OceanoFundoToggle(): React.ReactElement {
+  const [fundo, setFundo] = React.useState(lerFundoOceano)
+  React.useEffect(() => { aplicarFundoOceano(fundo) }, [fundo])
+  const transparente = fundo === 'transparente'
+  return (
+    <button
+      data-testid="oceano-fundo-toggle"
+      onClick={() => setFundo(transparente ? 'efeitos' : 'transparente')}
+      title={transparente ? 'Fundo transparente: o mar do Oceano aparece por trás. Clique para o fundo do Stave.' : 'Clique para deixar o fundo transparente e ver o mar do Oceano por trás'}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 3, fontSize: 10,
+        fontFamily: 'inherit', cursor: 'pointer', userSelect: 'none',
+        background: transparente ? 'var(--accent-dim)' : 'none',
+        color: transparente ? 'var(--accent-strong, var(--accent))' : 'var(--foreground-muted)',
+        border: `1px solid ${transparente ? 'var(--accent-dim)' : 'var(--border)'}`,
+      }}
+    >
+      {transparente ? 'transparente' : 'fundo'}
     </button>
   )
 }
@@ -255,6 +291,8 @@ function StrudelChrome(ctx: ChromeContext): React.ReactElement {
           onToggle={onToggleAutoRefresh}
         />
       )}
+
+      {process.env.NEXT_PUBLIC_OCEANO === '1' && <OceanoFundoToggle />}
 
       {onToggleStopAtEnd && (
         <LoopToggle stopAtEnd={stopAtEnd ?? false} onToggle={onToggleStopAtEnd} />

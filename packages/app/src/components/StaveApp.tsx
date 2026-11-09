@@ -254,7 +254,7 @@ export function StaveApp({ initialProject }: StaveAppProps) {
     else root.removeAttribute("data-stave-phone");
     return () => root.removeAttribute("data-stave-phone");
   }, [phone]);
-  const [activePanelId, setActivePanelId] = useState<string | null>(() => (isPhone() ? null : "explorer"));
+  const [activePanelId, setActivePanelId] = useState<string | null>(() => (isPhone() || process.env.NEXT_PUBLIC_OCEANO === "1" ? null : "explorer"));
   // The drawer's Menu tab is the drawer's own, not a panel: it has no rail button and
   // must not be left selected for a rail that cannot show it.
   const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
@@ -1831,7 +1831,7 @@ export function StaveApp({ initialProject }: StaveAppProps) {
       keybinding: "mod+shift+\\",
       run: () => { shellRef.current?.splitActiveGroup?.("south"); },
     }));
-    unregs.push(registerCommand({
+    if (!process.env.NEXT_PUBLIC_OCEANO) unregs.push(registerCommand({
       id: "stave.file.share",
       title: "Copy Share Link",
       category: "File",

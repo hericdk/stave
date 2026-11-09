@@ -49,7 +49,19 @@ import { pinTabBackdropIfUnset } from "./state/tabBackdrops";
 
 // ── Default code snippets ────────────────────────────────────────────
 
-export const STRUDEL_CODE = `// Welcome to Stave! Ctrl+Enter plays, Ctrl+. stops.
+export const STRUDEL_CODE = process.env.NEXT_PUBLIC_OCEANO === "1" ? `setcps(110/60/4) // 110 bpm
+
+kick: s("bd*4").bank("LinnDrum").gain(0.5)
+
+snare: s("~ sd ~ sd").bank("LinnDrum").gain(0.4).room(0.6).size(6)
+
+hats: s("[~ hh]*4").bank("LinnDrum").gain(0.3)
+
+
+lead: n("<[4 ~ 3 ~ 2 ~ ~ ~] [~ 0 ~ 2 3 ~ 2 ~]>").scale("A4:minor")
+  .s("square").lpf(2500).gain(0.4).delay(0.4).delaytime(3/8)
+  .viz("scope")
+` : `// Welcome to Stave! Ctrl+Enter plays, Ctrl+. stops.
 // Each named line is a track: you'll find it in the Mixer and on the Timeline.
 
 setcps(110/60/4) // 110 bpm

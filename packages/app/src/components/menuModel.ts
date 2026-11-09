@@ -96,8 +96,8 @@ export function buildMenus(a: MenuActions): Menu[] {
         item("Open Project File...", a.onImportProject),
         item("Export as .stave", a.onExportProject),
         item("Bounce to WAV...", a.onBounceToWav, { disabled: !a.canBounceToWav() }),
-        divider,
-        item("Copy Share Link", a.onShareProject),
+        // Oceano: sem servidor de compartilhar — o link curto não existe no build do navegador
+        ...(process.env.NEXT_PUBLIC_OCEANO ? [] : [divider, item("Copy Share Link", a.onShareProject)]),
         divider,
         item("Editor Settings...", a.onOpenEditorSettings),
         item("Keyboard Shortcuts...", a.onOpenShortcuts),

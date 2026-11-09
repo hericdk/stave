@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+// Oceano: build estático servido em /stave dentro do navegador Oceano (STAVE_OCEANO=1).
+const OCEANO = process.env.STAVE_OCEANO === "1";
+
+const nextConfig: NextConfig = OCEANO ? {
+  transpilePackages: ["@stave/editor"],
+  output: "export",
+  basePath: "/stave",
+  trailingSlash: true,
+  images: { unoptimized: true },
+  typescript: { ignoreBuildErrors: true },   // os testes do servidor (rotas tiradas do build) não entram aqui
+  env: { NEXT_PUBLIC_BASE_PATH: "/stave", NEXT_PUBLIC_OCEANO: "1" },
+} : {
   // Only transpile the local workspace package — it ships TypeScript/JSX source.
   // The @strudel/* and @kabelsalat/* packages are pre-compiled ESM bundles;
   // adding them to transpilePackages causes Turbopack to try statically resolving

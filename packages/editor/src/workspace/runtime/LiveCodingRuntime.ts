@@ -135,6 +135,10 @@ import {
  */
 const LIVE_MODE_DEBOUNCE_MS = 500
 
+// Oceano: no navegador Oceano o "ao vivo" já começa ligado, mas só re-avalia enquanto
+// a música está tocando: editar parado nunca dispara som.
+const OCEANO_AO_VIVO = process.env.NEXT_PUBLIC_OCEANO === '1'
+
 /**
  * #2259 — how long a Play may take to start before it says it is pending.
  * Long enough that a Play with everything already loaded (a few ms) never
@@ -275,7 +279,7 @@ export class LiveCodingRuntime implements LiveCodingRuntimeInterface {
   // without leaking between sessions or firing after dispose. The debounce
   // timeout is tracked separately so setAutoRefresh(false) / stop() can
   // cancel an in-flight pending re-play.
-  private autoRefreshEnabled = false
+  private autoRefreshEnabled = OCEANO_AO_VIVO
   private autoRefreshUnsub: (() => void) | null = null
   private autoRefreshTimeout: ReturnType<typeof setTimeout> | null = null
   private readonly autoRefreshChangedListeners = new Set<(enabled: boolean) => void>()

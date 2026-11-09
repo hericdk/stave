@@ -5,7 +5,7 @@ import { loader } from '@monaco-editor/react'
  * `monaco-editor/min/vs` into `public/monaco/vs` (see packages/app/scripts/
  * copy-monaco.mjs), so this resolves to a same-origin `/monaco/vs/…` URL.
  */
-const MONACO_VS_PATH = '/monaco/vs'
+const MONACO_VS_PATH = (process.env.NEXT_PUBLIC_BASE_PATH ?? '') + '/monaco/vs'
 
 // Self-host Monaco instead of @monaco-editor's jsdelivr CDN default (#690).
 // `@monaco-editor/loader` otherwise fetches the editor core + its web workers

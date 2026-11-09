@@ -117,6 +117,8 @@ import { PIANOROLL_HYDRA_CODE, seedMissingPresetFiles } from "../templates";
 import { installBounceProbe } from "../e2e/bounceProbe";
 import { installAssetProbe } from "../e2e/assetProbe";
 import { warmWaveforms } from "../audio/waveformWarm";
+// Oceano: o "ao vivo" já vem ligado (a música só muda durante o play)
+const AO_VIVO_PADRAO = process.env.NEXT_PUBLIC_OCEANO === "1";
 
 
 // Phase 20-12 — the timeline collects across the same cycle window the live
@@ -1166,7 +1168,7 @@ export default function StrudelEditorClient({
     runtime.onPlayingChanged((playing: boolean) => {
       setRuntimeStates(prev => {
         const next = new Map(prev);
-        const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: false };
+        const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: AO_VIVO_PADRAO };
         next.set(fileId, { ...cur, isPlaying: playing, bpm: runtime.getBpm() });
         return next;
       });
@@ -1174,7 +1176,7 @@ export default function StrudelEditorClient({
     runtime.onPlayPendingChanged?.((pending: boolean) => {
       setRuntimeStates(prev => {
         const next = new Map(prev);
-        const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: false };
+        const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: AO_VIVO_PADRAO };
         next.set(fileId, { ...cur, isPlayPending: pending });
         return next;
       });
@@ -1216,7 +1218,7 @@ export default function StrudelEditorClient({
         const errorMessage = parts?.message;
         setRuntimeStates(prev => {
           const next = new Map(prev);
-          const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: false };
+          const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: AO_VIVO_PADRAO };
           next.set(fileId, { ...cur, error: err, errorMessage });
           return next;
         });
@@ -1354,7 +1356,7 @@ export default function StrudelEditorClient({
 
       setRuntimeStates(prev => {
         const next = new Map(prev);
-        const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: false };
+        const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: AO_VIVO_PADRAO };
         // Refresh BPM on every successful eval (#599): the chrome's tempo was
         // only set on play/stop transitions (onPlayingChanged), so a live
         // `setcps` edit never updated the readout until stop+play. getBpm()
@@ -1444,7 +1446,7 @@ export default function StrudelEditorClient({
     runtime.onAutoRefreshChanged((enabled: boolean) => {
       setRuntimeStates(prev => {
         const next = new Map(prev);
-        const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: false };
+        const cur = next.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: AO_VIVO_PADRAO };
         next.set(fileId, { ...cur, autoRefresh: enabled });
         return next;
       });
@@ -1471,7 +1473,7 @@ export default function StrudelEditorClient({
         setRuntimeStates((prev) => {
           if (prev.has(fileId)) return prev;
           const next = new Map(prev);
-          next.set(fileId, { isPlaying: false, error: null, autoRefresh: false });
+          next.set(fileId, { isPlaying: false, error: null, autoRefresh: AO_VIVO_PADRAO });
           return next;
         });
       });
@@ -1550,7 +1552,7 @@ export default function StrudelEditorClient({
     if (!rt) return;
     setRuntimeStates(prev => {
       const next = new Map(prev);
-      const cur = prev.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: false };
+      const cur = prev.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: AO_VIVO_PADRAO };
       next.set(fileId, { ...cur, error: null });
       return next;
     });
@@ -1570,7 +1572,7 @@ export default function StrudelEditorClient({
   const handleToggleStopAtEnd = useCallback((fileId: string) => {
     setRuntimeStates(prev => {
       const next = new Map(prev);
-      const cur = prev.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: false };
+      const cur = prev.get(fileId) ?? { isPlaying: false, error: null, autoRefresh: AO_VIVO_PADRAO };
       next.set(fileId, { ...cur, stopAtEnd: !cur.stopAtEnd });
       return next;
     });

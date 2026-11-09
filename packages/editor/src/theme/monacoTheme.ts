@@ -19,7 +19,7 @@ export function defineStrudelMonacoTheme(monaco: typeof Monaco): void {
       { token: 'number.hex',            foreground: 'fb923c' },
       { token: 'number.binary',         foreground: 'fb923c' },
       { token: 'number.float',          foreground: 'fb923c' },
-      { token: 'comment',               foreground: '6b7280', fontStyle: 'italic' },
+      { token: 'comment',               foreground: 'd6dae2', fontStyle: 'italic' },
       { token: 'keyword',               foreground: 'c4b5fd' },
       { token: 'keyword.operator',      foreground: 'f472b6' },
       { token: 'variable.predefined',   foreground: 'fde68a' },

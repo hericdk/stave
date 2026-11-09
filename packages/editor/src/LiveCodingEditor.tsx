@@ -114,7 +114,7 @@ export function LiveCodingEditor({
   const [isPlaying, setIsPlaying] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const [bpm, setBpm] = useState<number | undefined>(bpmProp)
-  const [autoRefresh, setAutoRefresh] = useState(false)
+  const [autoRefresh, setAutoRefresh] = useState(process.env.NEXT_PUBLIC_OCEANO === '1')
 
   // Seed the workspace file once on mount.
   const fileIdRef = useRef(FILE_ID)

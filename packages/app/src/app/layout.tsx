@@ -106,7 +106,7 @@ export default function RootLayout({
             nothing from the editor. Production builds only: in development the
             component fetches a debug script from va.vercel-scripts.com and logs
             every view, on every page load of every browser spec. */}
-        {process.env.NODE_ENV === "production" && <Analytics />}
+        {process.env.NODE_ENV === "production" && !process.env.NEXT_PUBLIC_OCEANO && <Analytics />}
       </body>
     </html>
   );
